@@ -2,6 +2,8 @@ import  {useState,useEffect} from 'react';
 import './App.css'
 import AddTask from './components/AddTask';
 import TaskList from './components/TaskList';
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
 
 interface Task {
   id: number;
@@ -17,6 +19,19 @@ const App: React.FC = () => {
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
   const [categoryFilter, setCategoryFilter] = useState<string>(String)
+
+   
+  useEffect(() => {
+    const driverObj = driver({
+    showProgress: true,
+    steps: [
+      { element: '#todo', popover: { title: 'Welcome to ToDo list', description: 'simple ToDo app allows users to add tasks', side: 'top', align: 'start' } },
+      { element: '#form', popover: { title: 'Enter task title', description: 'Add tasks with titles and categories' , side: 'right', align: 'end'} },
+      { element: '#category', popover: { title: 'Categorize tasks', description: 'Categorize tasks using the dropdown menu', side: 'right', align: 'start' } },
+     ]
+  });
+  driverObj.drive();
+  });
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -45,10 +60,12 @@ const App: React.FC = () => {
 
   return (
     <div className="bg-secondery ">
-      <h1 className='text-primary font-bold text-center text-5xl md:text-7xl pt-16'>ToDo List</h1>
+      <h1 id='todo' className='text-primary font-bold text-center text-5xl md:text-7xl pt-16'>ToDo List</h1>
       <div className='flex flex-col  h-screen   items-center gap-10 mt-24 text-white  '>
+        <div id='form'>
       <AddTask onAddTask={addTask} />
-      <div className='flex items-center gap-2'>
+      </div>
+      <div id='category' className='flex items-center gap-2'>
         <label htmlFor="categoryFilter"  className="font-bold text-2xl">Filter by Category:</label>
         <select
           id="categoryFilter"
