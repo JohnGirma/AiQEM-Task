@@ -4,18 +4,21 @@ interface Task {
   id: number;
   title: string;
   completed: boolean;
+  category:string
 }
 
 interface TaskListProps {
   tasks: Task[];
   onCompleteTask: (taskId: number) => void;
   onDeleteTask: (taskId: number) => void;
+  categoryFilter: (taskId: string) => void;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, onCompleteTask, onDeleteTask }) => {
-  return (
+const TaskList: React.FC<TaskListProps> = ({ tasks, onCompleteTask, onDeleteTask,categoryFilter }) => {
+    const filteredTasks = categoryFilter ? tasks.filter(task => task.category === categoryFilter) : tasks
+    return (
     <ul>
-      {tasks.map((task) => (
+      {filteredTasks.map((task) => (
         <li key={task.id}>
           <input
             type="checkbox"
