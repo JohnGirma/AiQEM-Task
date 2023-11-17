@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import  {useState,useEffect} from 'react';
 import AddTask from './components/AddTask';
 import TaskList from './components/TaskList';
 
@@ -10,6 +10,18 @@ interface Task {
 
 const App: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
+
+  useEffect(() => {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+      setTasks(JSON.parse(storedTasks));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
 
   const addTask = (title: string) => {
     const newTask: Task = {
