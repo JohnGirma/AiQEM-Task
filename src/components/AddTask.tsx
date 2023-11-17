@@ -26,7 +26,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onAddTask }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='flex items-center gap-4 flex-wrap justify-center text-tertiary'>
+    <form onSubmit={handleSubmit} className='flex items-center gap-4 flex-wrap justify-center'>
       <input
         type="text"
         placeholder="Enter task title"
@@ -37,13 +37,13 @@ const AddTask: React.FC<AddTaskProps> = ({ onAddTask }) => {
       <select 
         value={category} 
         onChange={handleCategoryChange}
-        className='p-1  bg-primary rounded font-medium '>
+        className='p-1  bg-primary rounded font-medium  text-tertiary'>
         <option value="personal">Personal</option>
         <option value="work">Work</option>
         <option value="other">Other</option>
       </select>
       <button 
-        className='p-1  bg-primary rounded font-medium text-slate-300'
+        className='p-1  text-tertiary bg-primary rounded font-medium text-slate-300'
         type="submit">Add Task</button>
     </form>
   );

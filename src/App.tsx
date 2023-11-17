@@ -31,7 +31,7 @@ const App: React.FC = () => {
      ]
   });
   driverObj.drive();
-  });
+  },[]);
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
