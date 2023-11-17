@@ -26,19 +26,25 @@ const AddTask: React.FC<AddTaskProps> = ({ onAddTask }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='flex items-center gap-4 flex-wrap justify-center'>
       <input
         type="text"
         placeholder="Enter task title"
         value={title}
         onChange={handleTitleChange}
-      />
-      <select value={category} onChange={handleCategoryChange}>
+        className='p-1 border border-primary rounded font-medium text-slate-300'
+      /> 
+      <select 
+        value={category} 
+        onChange={handleCategoryChange}
+        className='p-1  bg-primary rounded font-medium '>
         <option value="personal">Personal</option>
         <option value="work">Work</option>
         <option value="other">Other</option>
       </select>
-      <button type="submit">Add Task</button>
+      <button 
+        className='p-1  bg-primary rounded font-medium text-slate-300'
+        type="submit">Add Task</button>
     </form>
   );
 };

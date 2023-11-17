@@ -1,4 +1,5 @@
 import  {useState,useEffect} from 'react';
+import './App.css'
 import AddTask from './components/AddTask';
 import TaskList from './components/TaskList';
 
@@ -48,15 +49,17 @@ const App: React.FC = () => {
   };
 
   return (
-    <div >
-      <h1 className='text-cyan-600 font-bold underline'>ToDo List</h1>
+    <div className="bg-secondery h-screen ">
+      <div className='flex flex-col justify-center items-center gap-4 p-4 text-white'>
+      <h1 className='text-primary font-bold  text-4xl'>ToDo List</h1>
       <AddTask onAddTask={addTask} />
-      <div>
-        <label htmlFor="categoryFilter">Filter by Category:</label>
+      <div className='flex items-center gap-2'>
+        <label htmlFor="categoryFilter"  className="font-bold text-2xl">Filter by Category:</label>
         <select
           id="categoryFilter"
           value={categoryFilter || ''}
           onChange={(e) => setCategoryFilter(e.target.value)}
+          className="shadow-2xl rounded bg-primary text-white uppercase p-1"
         >
           <option value="">All</option>
           <option value="work">Work</option>
@@ -65,6 +68,7 @@ const App: React.FC = () => {
         </select>
       </div>
       <TaskList tasks={tasks} onCompleteTask={completeTask} onDeleteTask={deleteTask} categoryFilter={categoryFilter}/>
+      </div>
     </div>
   );
 };
