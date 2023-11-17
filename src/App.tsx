@@ -54,7 +54,7 @@ const App: React.FC = () => {
           id="categoryFilter"
           value={categoryFilter || ''}
           onChange={(e) => setCategoryFilter(e.target.value)}
-          className="shadow-2xl rounded bg-primary text-white uppercase p-1"
+          className="shadow-2xl rounded bg-primary text-white uppercase p-1 text-tertiary"
         >
           <option value="">All</option>
           <option value="work">Work</option>

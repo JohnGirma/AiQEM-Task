@@ -26,7 +26,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onAddTask }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className='flex items-center gap-4 flex-wrap justify-center'>
+    <form onSubmit={handleSubmit} className='flex items-center gap-4 flex-wrap justify-center text-tertiary'>
       <input
         type="text"
         placeholder="Enter task title"

@@ -18,18 +18,18 @@ interface TaskListProps {
 const TaskList: React.FC<TaskListProps> = ({ tasks, onCompleteTask, onDeleteTask,categoryFilter }) => {
     const filteredTasks = categoryFilter ? tasks.filter(task => task.category === categoryFilter) : tasks
     return (
-    <ul className='flex flex-col gap-5'>
+    <ul className='flex flex-col gap-5 '>
       {filteredTasks.map((task) => (
-        <li key={task.id} className='flex flex-row justify-between gap-24 md:gap-80'>
+        <li key={task.id} className='flex flex-row justify-between gap-24 md:gap-80 bg-primary bg-opacity-75 border-8 border-primary border-opacity-10 rounded-lg'>
             <div className='flex flex-row justify-start gap-3'>
           <input
             type="checkbox"
             checked={task.completed}
             onChange={() => onCompleteTask(task.id)}
-            className="w-6 h-6 rounded-sm border border-primary"
+            className="w-6 h-6 rounded-sm border border-primary "
           />
            
-          <span className='text-xl font-medium uppercase ' style={{ textDecoration: task.completed ? 'line-through ' : 'none' }}>
+          <span className='text-xl font-medium uppercase' style={{ textDecoration: task.completed ? 'line-through ' : 'none' }}>
             {task.title}
           </span>
             </div>
