@@ -44,9 +44,9 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="bg-secondery h-screen ">
-      <div className='flex flex-col justify-center items-center gap-4 p-4 text-white'>
-      <h1 className='text-primary font-bold  text-4xl'>ToDo List</h1>
+    <div className="bg-secondery ">
+      <h1 className='text-primary font-bold text-center text-5xl md:text-7xl pt-16'>ToDo List</h1>
+      <div className='flex flex-col  h-screen   items-center gap-10 mt-24 text-white  '>
       <AddTask onAddTask={addTask} />
       <div className='flex items-center gap-2'>
         <label htmlFor="categoryFilter"  className="font-bold text-2xl">Filter by Category:</label>

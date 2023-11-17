@@ -20,7 +20,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onCompleteTask, onDeleteTask
     return (
     <ul className='flex flex-col gap-5'>
       {filteredTasks.map((task) => (
-        <li key={task.id} className='flex flex-row justify-between gap-24'>
+        <li key={task.id} className='flex flex-row justify-between gap-24 md:gap-80'>
             <div className='flex flex-row justify-start gap-3'>
           <input
             type="checkbox"
