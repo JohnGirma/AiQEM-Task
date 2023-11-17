@@ -12,7 +12,7 @@ interface Task {
 
 const App: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [categoryFilter, setCategoryFilter] = useState<string | null>(null)
+  const [categoryFilter, setCategoryFilter] = useState<string>(String)
 
   useEffect(() => {
     const storedTasks = localStorage.getItem('tasks');
@@ -48,7 +48,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <>
+    <div >
       <h1 className='text-cyan-600 font-bold underline'>ToDo List</h1>
       <AddTask onAddTask={addTask} />
       <div>
@@ -56,7 +56,7 @@ const App: React.FC = () => {
         <select
           id="categoryFilter"
           value={categoryFilter || ''}
-          onChange={(e) => setCategoryFilter(e.target.value || null)}
+          onChange={(e) => setCategoryFilter(e.target.value)}
         >
           <option value="">All</option>
           <option value="work">Work</option>
@@ -65,7 +65,7 @@ const App: React.FC = () => {
         </select>
       </div>
       <TaskList tasks={tasks} onCompleteTask={completeTask} onDeleteTask={deleteTask} categoryFilter={categoryFilter}/>
-    </>
+    </div>
   );
 };
 
