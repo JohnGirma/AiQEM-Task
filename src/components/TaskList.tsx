@@ -11,7 +11,7 @@ interface TaskListProps {
   tasks: Task[];
   onCompleteTask: (taskId: number) => void;
   onDeleteTask: (taskId: number) => void;
-  categoryFilter: (taskId: string) => void;
+  categoryFilter: string
 }
 
 const TaskList: React.FC<TaskListProps> = ({ tasks, onCompleteTask, onDeleteTask,categoryFilter }) => {

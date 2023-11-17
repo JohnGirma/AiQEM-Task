@@ -49,7 +49,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <h1>ToDo List</h1>
+      <h1 className='text-cyan-600 font-bold underline'>ToDo List</h1>
       <AddTask onAddTask={addTask} />
       <div>
         <label htmlFor="categoryFilter">Filter by Category:</label>
