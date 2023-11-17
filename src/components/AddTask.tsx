@@ -21,7 +21,7 @@ const AddTask: React.FC<AddTaskProps> = ({ onAddTask }) => {
     if (title.trim() !== '') {
       onAddTask(title, category);
       setTitle('');
-      setCategory('')
+      setCategory(category)
     }
   };
 
