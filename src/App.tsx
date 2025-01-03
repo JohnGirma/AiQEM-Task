@@ -1,88 +1,91 @@
-import  {useState,useEffect} from 'react';
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import AddTask from './components/AddTask';
 import TaskList from './components/TaskList';
-import { driver } from "driver.js";
-import "driver.js/dist/driver.css";
+import './App.css';
 
 interface Task {
   id: number;
   title: string;
+  category: string;
   completed: boolean;
-  category:string
-
 }
 
-const App: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>(() => {
-    const savedTasks = localStorage.getItem('tasks');
-    return savedTasks ? JSON.parse(savedTasks) : [];
-  });
-  const [categoryFilter, setCategoryFilter] = useState<string>(String)
-
-   
-  useEffect(() => {
-    const driverObj = driver({
-    showProgress: true,
-    steps: [
-      { element: '#todo', popover: { title: 'Welcome to ToDo list', description: 'simple ToDo app allows users to add tasks', side: 'top', align: 'start' } },
-      { element: '#form', popover: { title: 'Enter task title', description: 'Add tasks with titles and categories' , side: 'right', align: 'end'} },
-      { element: '#category', popover: { title: 'Categorize tasks', description: 'Categorize tasks using the dropdown menu', side: 'right', align: 'start' } },
-     ]
-  });
-  driverObj.drive();
-  },[]);
+function App() {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [categoryFilter, setCategoryFilter] = useState('');
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
+    fetchTasks();
+  }, []);
 
-  const addTask = (title: string,category:string) => {
-    const newTask: Task = {
-      id: Date.now(),
-      title,
-      completed: false,
-      category,
-    };
+  const fetchTasks = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/tasks');
+      setTasks(response.data);
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+    }
+  };
+
+  const handleAddTask = (newTask: Task) => {
     setTasks([...tasks, newTask]);
   };
-  const completeTask = (taskId: number) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, completed: !task.completed } : task
-    );
-    setTasks(updatedTasks);
+
+  const handleDeleteTask = async (taskId: number) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/tasks/${taskId}`);
+      setTasks(tasks.filter(task => task.id !== taskId));
+    } catch (error) {
+      console.error('Error deleting task:', error);
+    }
   };
 
-  const deleteTask = (taskId: number) => {
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    setTasks(updatedTasks);
+  const handleToggleComplete = async (taskId: number) => {
+    try {
+      const response = await axios.patch(`http://localhost:5000/api/tasks/${taskId}`);
+      setTasks(tasks.map(task => 
+        task.id === taskId ? response.data : task
+      ));
+    } catch (error) {
+      console.error('Error toggling task:', error);
+    }
   };
 
   return (
-    <div className="bg-secondery ">
-      <h1 id='todo' className='text-primary font-bold text-center text-5xl md:text-7xl pt-16'>ToDo List</h1>
-      <div className='flex flex-col  h-screen   items-center gap-10 mt-24 text-white  '>
-        <div id='form'>
-      <AddTask onAddTask={addTask} />
-      </div>
-      <div id='category' className='flex items-center gap-2'>
-        <label htmlFor="categoryFilter"  className="font-bold text-2xl">Filter by Category:</label>
-        <select
-          id="categoryFilter"
-          value={categoryFilter || ''}
-          onChange={(e) => setCategoryFilter(e.target.value)}
-          className="shadow-2xl rounded bg-primary text-white uppercase p-1 text-tertiary"
-        >
-          <option value="">All</option>
-          <option value="work">Work</option>
-          <option value="personal">Personal</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <TaskList tasks={tasks} onCompleteTask={completeTask} onDeleteTask={deleteTask} categoryFilter={categoryFilter}/>
+    <div className="min-h-screen bg-gray-100 py-8 px-4">
+      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
+          Task Manager
+        </h1>
+        <AddTask onAddTask={handleAddTask} />
+        
+        <div className="mt-8 flex justify-center items-center gap-4">
+          <label htmlFor="categoryFilter" className="text-gray-700 font-medium">
+            Filter by Category:
+          </label>
+          <select
+            id="categoryFilter"
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            className="p-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="">All Tasks</option>
+            <option value="personal">Personal</option>
+            <option value="work">Work</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <TaskList 
+          tasks={tasks} 
+          onDeleteTask={handleDeleteTask}
+          onToggleComplete={handleToggleComplete}
+          categoryFilter={categoryFilter}
+        />
       </div>
     </div>
   );
-};
+}
 
 export default App;

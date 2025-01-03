@@ -1,40 +1,55 @@
-# ToDo App
+# Task Manager Application
 
-This is a simple ToDo app built with React and TypeScript. It allows users to add tasks, mark them as completed, categorize tasks, and persist tasks using browser's localStorage.
-![Todo design](design/todoDesgin.PNG)
+A modern task management application built with React, TypeScript, and Node.js, featuring a MySQL database backend.
 
-## Deployment
- https://yegaratech.com/
 ## Features
 
-- Add tasks with titles and categories
-- Mark tasks as completed
-- Categorize tasks (e.g., personal, work)
-- Persist tasks using browser's localStorage
-- Delete tasks
-- Responsive design
-- Styled using Tailwind CSS
+### Task Management
+- ✅ Create new tasks with titles and categories
+- ✅ Mark tasks as complete/incomplete
+- ✅ Delete tasks
+- ✅ Filter tasks by category (Personal, Work, Other)
 
-## Installation
+### User Interface
+- 🎨 Modern, responsive design
+- 💫 Smooth transitions and hover effects
+- 🎯 Category-specific color coding
+- 🔍 Category filtering system
+- 📱 Mobile-friendly layout
 
-1. Clone the repository
-2. Install dependencies using `yarn add`
-3. Start the development server using `yarn dev`
+### Technical Features
+- 🔒 Type-safe with TypeScript
+- 🗄️ MySQL database integration
+- 🔄 Real-time updates
+- 🎯 RESTful API endpoints
+- 🛠️ Sequelize ORM integration
 
-## Technologies Used
+## Tech Stack
 
+### Frontend
 - React
 - TypeScript
 - Tailwind CSS
-- localStorage
-- Vite
+- Axios
 
-## Usage
+### Backend
+- Node.js
+- Express.js
+- MySQL
+- Sequelize ORM
 
-- Add a new task by entering a title and selecting a category
-- Mark tasks as completed by checking the checkbox
-- Categorize tasks using the dropdown menu
-- Delete tasks using the delete button
+## Setup Instructions
+
+### Prerequisites
+- Node.js
+- MySQL (XAMPP)
+- npm or yarn
+
+### Database Setup
+1. Start XAMPP and ensure MySQL service is running
+2. Create a new database named `task_manager`
+
+
 
 ## Design
  https://www.figma.com/file/sc1avtZ5bo0jyfNUkgHD0N/Todo-list?type=design&node-id=0%3A1&mode=design&t=XRb2T01vQ1c8quvb-1
