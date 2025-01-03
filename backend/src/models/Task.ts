@@ -4,6 +4,7 @@ import sequelize from '../config/database';
 interface TaskAttributes {
   id?: number;
   title: string;
+  description?: string;
   category: string;
   completed: boolean;
   createdAt?: Date;
@@ -13,6 +14,7 @@ interface TaskAttributes {
 class Task extends Model<TaskAttributes> implements TaskAttributes {
   public id!: number;
   public title!: string;
+  public description!: string;
   public category!: string;
   public completed!: boolean;
   public readonly createdAt!: Date;
@@ -37,6 +39,10 @@ Task.init(
     completed: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
   },
   {

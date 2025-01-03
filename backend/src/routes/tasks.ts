@@ -59,4 +59,20 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
+// Add description update route
+router.patch('/:id/description', async (req, res) => {
+  try {
+    const task = await Task.findByPk(req.params.id);
+    if (task) {
+      task.description = req.body.description;
+      await task.save();
+      res.json(task);
+    } else {
+      res.status(404).json({ message: 'Task not found' });
+    }
+  } catch (error) {
+    res.status(400).json({ message: 'Error updating task description' });
+  }
+});
+
 export default router; 

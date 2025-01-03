@@ -52,6 +52,12 @@ function App() {
     }
   };
 
+  const handleTaskUpdate = (updatedTask: Task) => {
+    setTasks(tasks.map(task => 
+      task.id === updatedTask.id ? updatedTask : task
+    ));
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
       <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6">
@@ -82,6 +88,7 @@ function App() {
           onDeleteTask={handleDeleteTask}
           onToggleComplete={handleToggleComplete}
           categoryFilter={categoryFilter}
+          onTaskUpdate={handleTaskUpdate}
         />
       </div>
     </div>

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import TaskDetail from './TaskDetail';
 
 interface Task {
   id: number;
   title: string;
+  description?: string;
   category: string;
   completed: boolean;
 }
@@ -12,12 +14,20 @@ interface TaskListProps {
   onDeleteTask: (id: number) => void;
   onToggleComplete: (id: number) => void;
   categoryFilter: string;
+  onTaskUpdate: (updatedTask: Task) => void;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, onDeleteTask, onToggleComplete, categoryFilter }) => {
+const TaskList: React.FC<TaskListProps> = ({ tasks, onDeleteTask, onToggleComplete, categoryFilter, onTaskUpdate }) => {
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  
   const filteredTasks = categoryFilter 
     ? tasks.filter(task => task.category === categoryFilter) 
     : tasks;
+
+  const handleTaskUpdate = (updatedTask: Task) => {
+    // Update the task in the parent component
+    onTaskUpdate(updatedTask);
+  };
 
   return (
     <div className="mt-8 space-y-3">
@@ -26,13 +36,23 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onDeleteTask, onToggleComple
           key={task.id} 
           className={`flex items-center justify-between p-4 rounded-lg border ${
             task.completed ? 'bg-gray-50 border-gray-200' : 'bg-white border-gray-300'
-          } hover:shadow-md transition-shadow`}
+          } hover:shadow-md transition-shadow cursor-pointer`}
+          onClick={(e) => {
+            // Only open modal if not clicking buttons
+            if (!(e.target as HTMLElement).closest('button') && 
+                !(e.target as HTMLElement).closest('input')) {
+              setSelectedTask(task);
+            }
+          }}
         >
           <div className="flex items-center gap-4">
             <input
               type="checkbox"
               checked={task.completed}
-              onChange={() => onToggleComplete(task.id)}
+              onChange={(e) => {
+                e.stopPropagation(); // Prevent modal from opening
+                onToggleComplete(task.id);
+              }}
               className="w-5 h-5 rounded border-gray-300 text-blue-500 focus:ring-blue-500"
             />
             <div className="flex flex-col">
@@ -48,7 +68,10 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onDeleteTask, onToggleComple
             </div>
           </div>
           <button
-            onClick={() => onDeleteTask(task.id)}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent modal from opening
+              onDeleteTask(task.id);
+            }}
             className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -57,6 +80,14 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onDeleteTask, onToggleComple
           </button>
         </div>
       ))}
+
+      {selectedTask && (
+        <TaskDetail
+          task={selectedTask}
+          onClose={() => setSelectedTask(null)}
+          onUpdate={handleTaskUpdate}
+        />
+      )}
     </div>
   );
 };
